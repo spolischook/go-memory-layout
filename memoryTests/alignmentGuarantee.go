@@ -100,8 +100,8 @@ func StructFieldsOffset() {
 func StructFieldsContent() {
 	var str2 = struct {
 		i1 uint8
-		i3 uint8
 		i2 uint64
+		i3 uint8
 	}{i1: 1, i2: 1<<64 - 1, i3: 1}
 	bs := (*[24]byte)(unsafe.Pointer(&str2))
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
@@ -116,52 +116,4 @@ func StructFieldsContent() {
 	}
 	w.Flush()
 	fmt.Printf("Bytes: %#v", bs)
-}
-
-type Animals struct {
-	items []Animal
-}
-
-func (as Animals) Say() {
-	for _, a := range as.items {
-		a.Say()
-	}
-}
-func (as *Animals) Add(a Animal) {
-	as.items = append(as.items, a)
-}
-
-type Animal interface {
-	Say()
-}
-type Cat struct {}
-type Dog struct {}
-
-func (d Dog) Bite() {
-	fmt.Println("rrrrrr kus")
-}
-func (d Dog) Say() {
-	fmt.Println("gav")
-}
-
-func (c Cat) Jump() {
-	fmt.Println("Jump")
-}
-
-func (c Cat) Say() {
-	fmt.Println("Meu")
-}
-
-func Process(as []Animal) {
-	for _, a := range as {
-		a.Say()
-	}
-}
-
-func InterfaceIssue() {
-	//var animals []Animal
-	//e = fmt.Errorf("i'm error")
-	//fmt.Println(e)
-
-
 }
